@@ -17,16 +17,12 @@ public class MainPage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<Location> locations = GetLocation.getLocations();
+        ArrayList<Integer> id_locations = new ArrayList<>();
         //System.out.println(locations);
 
         String locationName = request.getParameter("locationName");
         String latitude = request.getParameter("latitude");
         String longitude = request.getParameter("longitude");
-
-
-        System.out.println("Location Name: " + locationName);
-        System.out.println("Latitude: " + latitude);
-        System.out.println("Longitude: " + longitude);
 
         String option = request.getParameter("option");
 
@@ -43,7 +39,26 @@ public class MainPage extends HttpServlet {
                     }
                     else
                     {
-                        System.out.println("Location Name");
+                        int verify = 0;
+                        System.out.println("The location entered is: "+locationName.toUpperCase());
+                        for (Location location : locations) {
+                            if(location.getName().toLowerCase().contains(locationName.toLowerCase())){
+                                verify = 1;
+                                id_locations.add(location.getId());
+                            }
+                        }
+
+                        switch (verify){
+                            case 0:
+                                System.out.println("Nu exista in lista acesta localitate!");
+                                break;
+                            case 1:
+                                System.out.println("Exista!");
+                                break;
+                            default:
+                                break;
+                        }
+
                     }
                     break;
                 case "coordinates":
@@ -53,7 +68,26 @@ public class MainPage extends HttpServlet {
                     }
                     else
                     {
-                        System.out.println("Coordinates");
+                        int verify = 0;
+                        System.out.println("The latitude entered is: "+latitude+" and the longitude entered is: "+longitude);
+                        for (Location location : locations) {
+                            if(location.getLatitude().equals(Double.parseDouble(latitude)) && location.getLongitude().equals(Double.parseDouble(longitude))){
+                                verify = 1;
+                                id_locations.add(location.getId());
+                            }
+                        }
+
+                        switch (verify){
+                            case 0:
+                                System.out.println("Nu exista in lista acesta localitate cu coordonatele respective!");
+                                break;
+                            case 1:
+                                System.out.println("Exista!");
+                                break;
+                            default:
+                                break;
+                        }
+
                     }
                     break;
                 default:

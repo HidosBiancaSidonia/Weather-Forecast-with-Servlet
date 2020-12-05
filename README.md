@@ -13,3 +13,7 @@
 2. **GPS coordinates** (the server will respond with the nearest location or locations, from where the user will choose the location they are looking for).
 
 - [ ] the weather forecast is updated from hour to hour through an asynchronous process.
+
+<h2>The start page design :</h2>
+
+![image](https://user-images.githubusercontent.com/58684695/101262674-1c304d80-3749-11eb-82aa-4ecd939472f6.png)

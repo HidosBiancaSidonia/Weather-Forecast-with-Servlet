@@ -29,7 +29,6 @@ public class MainPage extends HttpServlet {
         System.out.println("Longitude: " + longitude);
 
         String option = request.getParameter("option");
-        System.out.println("Option is: " + option);
 
         if(locationName.isEmpty() && (latitude.isEmpty() && longitude.isEmpty())){
             RequestDispatcher req = request.getRequestDispatcher("index.html");
@@ -44,7 +43,7 @@ public class MainPage extends HttpServlet {
                     }
                     else
                     {
-
+                        System.out.println("Location Name");
                     }
                     break;
                 case "coordinates":
@@ -54,7 +53,7 @@ public class MainPage extends HttpServlet {
                     }
                     else
                     {
-
+                        System.out.println("Coordinates");
                     }
                     break;
                 default:

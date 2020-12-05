@@ -28,13 +28,38 @@ public class MainPage extends HttpServlet {
         System.out.println("Latitude: " + latitude);
         System.out.println("Longitude: " + longitude);
 
+        String option = request.getParameter("option");
+        System.out.println("Option is: " + option);
 
-
-        if(locationName.isEmpty() || (latitude.isEmpty() && longitude.isEmpty())){
+        if(locationName.isEmpty() && (latitude.isEmpty() && longitude.isEmpty())){
             RequestDispatcher req = request.getRequestDispatcher("index.html");
             req.include(request, response);
         }
         else {
+            switch (option){
+                case "name":
+                    if(locationName.isEmpty()){
+                        RequestDispatcher req = request.getRequestDispatcher("index.html");
+                        req.include(request, response);
+                    }
+                    else
+                    {
+
+                    }
+                    break;
+                case "coordinates":
+                    if((latitude.isEmpty() || longitude.isEmpty())){
+                        RequestDispatcher req = request.getRequestDispatcher("index.html");
+                        req.include(request, response);
+                    }
+                    else
+                    {
+
+                    }
+                    break;
+                default:
+                    break;
+            }
 
         }
 

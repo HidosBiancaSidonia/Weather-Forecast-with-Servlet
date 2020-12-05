@@ -13,9 +13,12 @@ public class GetLocation {
     public GetLocation(){
     }
 
+    /**
+     * Getting locations to the "Locations.txt" file
+     * @return an ArrayList with the locations in the "Locations.txt" file
+     */
     public static ArrayList<Location> getLocations()  {
         ArrayList<Location> locations = new ArrayList<>();
-
         try {
             File f = new File("../webapps/Weather_Forecast_war/resources/Locations.txt");
             Scanner sc = new Scanner(f);

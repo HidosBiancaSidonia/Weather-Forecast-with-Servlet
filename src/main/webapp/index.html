@@ -24,16 +24,26 @@
         padding: 30px 90px 30px 90px;
     }
 
+    span{
+        color: chartreuse;
+        margin-right: 50px;
+    }
+
 </style>
 <body >
 <h1 align="center">Weather Forecast</h1>
 <div class="myDiv">
-    <h2 style="color: aliceblue; padding-bottom: 50px" >Choose to see the weather after location or coordinates:</h2>
+    <h2 style="color: aliceblue; padding-bottom: 30px" >Choose to see the weather after location or coordinates:</h2>
     <form name="chooseForm" method="post" action="chooseServlet">
         <input type="text" name="locationName" class="form-control" placeholder="Location Name"  autofocus autocomplete="off"/> <br/>
         <input type="text" name="latitude" class="form-control" placeholder="Latitude"  autofocus autocomplete="off" style="margin-bottom: 20px;margin-top: 20px"/><br/>
-        <input type="text" name="longitude" class="form-control" placeholder="Longitude"  autofocus autocomplete="off" style="margin-bottom: 30px"/><br/>
-        <input type="submit" class="btn btn-primary" style=" width:150px" value="Search" />
+        <input type="text" name="longitude" class="form-control" placeholder="Longitude"  autofocus autocomplete="off" style="margin-bottom: 15px"/><br/>
+
+        <input type="radio" name="option" value="name" /><span> Location Name </span>
+        <input type="radio" name="option" value="coordinates" /><span> Coordinates </span>
+        <br/>
+        <br/>
+        <input type="submit" class="btn btn-primary" style=" width:150px" style="margin-top: 20px" value="Search" />
     </form>
 
 </div>

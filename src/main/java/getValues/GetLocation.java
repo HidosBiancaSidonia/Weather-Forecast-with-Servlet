@@ -2,9 +2,7 @@ package getValues;
 
 import model.Location;
 import java.io.*;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -38,9 +36,6 @@ public class GetLocation {
         } catch (FileNotFoundException e) {
             System.out.println("File \"Locations.txt\" not found");
         }
-
-        System.out.println(locations);
-
         return locations;
     }
 }

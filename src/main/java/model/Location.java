@@ -7,15 +7,17 @@ public class Location implements Serializable {
     private String name;
     private Double latitude;
     private Double longitude;
+    private Double difference;
 
     public Location() {
     }
 
-    public Location(Integer id, String name, Double latitude, Double longitude) {
+    public Location(Integer id, String name, Double latitude, Double longitude, Double difference) {
         this.id = id;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.difference = difference;
     }
 
     public Integer getId() {
@@ -50,6 +52,14 @@ public class Location implements Serializable {
         this.longitude = longitude;
     }
 
+    public Double getDifference() {
+        return difference;
+    }
+
+    public void setDifference(Double difference) {
+        this.difference = difference;
+    }
+
     @Override
     public String toString() {
         return "Location: " +
@@ -57,6 +67,7 @@ public class Location implements Serializable {
                 ", name='" + name + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", difference=" + difference +
                 "\r\n";
     }
 }

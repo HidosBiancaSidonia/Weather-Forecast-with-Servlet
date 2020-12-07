@@ -17,8 +17,8 @@ import java.util.ArrayList;
 @WebServlet("/chooseServlet")
 public class MainPage extends HttpServlet {
 
-    private ArrayList<Location> locationsInList = new ArrayList<>();
-    DecimalFormat df = new DecimalFormat("#.0000");
+    private final ArrayList<Location> locationsInList = new ArrayList<>();
+    private final DecimalFormat df = new DecimalFormat("#.0000");
 
     /**
      * Constructor
@@ -27,20 +27,13 @@ public class MainPage extends HttpServlet {
     }
 
     /**
-     * @return localities that match what the web client has entered
-     */
-    public ArrayList<Location> getLocationsInList() {
-        return locationsInList;
-    }
-
-    /**
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
+     * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+     * @throws ServletException if the request for the POST could not be handled
+     * @throws IOException if an input or output error is detected when the servlet handles the request
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         ArrayList<Location> locations = GetLocation.getLocations();
 
         //System.out.println(locations);
@@ -114,7 +107,7 @@ public class MainPage extends HttpServlet {
 
 
                                 double minDistance = 10.0000;
-                                double distance = 0.0;
+                                double distance;
                                 for (Location location : locations) {
                                     distance = Double.parseDouble(df.format(distanceBetweenTwoPoints(location.getLatitude(), location.getLongitude(), Double.parseDouble(df.format(Double.parseDouble(latitude))), Double.parseDouble(df.format(Double.parseDouble(longitude))))));
 
@@ -165,8 +158,13 @@ public class MainPage extends HttpServlet {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
+    /**
+     * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+     * @throws IOException if an input or output error is detected when the servlet handles the GET request
+     */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("index.html");
         PrintWriter out = response.getWriter();
         out.print("<html><head>");

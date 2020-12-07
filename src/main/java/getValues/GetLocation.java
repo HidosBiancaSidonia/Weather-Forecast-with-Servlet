@@ -2,7 +2,6 @@ package getValues;
 
 import model.Location;
 import java.io.*;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -26,10 +25,7 @@ public class GetLocation {
             while(sc.hasNextLine()){
                 String line = sc.nextLine();
                 String[] details = line.split(";");
-                double difference = Double.parseDouble(details[2])-Double.parseDouble(details[3]);
-                DecimalFormat df = new DecimalFormat("#.0000");
-
-                Location p = new Location(Integer.parseInt(details[0]), details[1],Double.parseDouble(details[2]),Double.parseDouble(details[3]),Double.parseDouble(df.format(difference)));
+                Location p = new Location(Integer.parseInt(details[0]), details[1],Double.parseDouble(details[2]),Double.parseDouble(details[3]));
                 locations.add(p);
             }
 

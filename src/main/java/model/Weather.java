@@ -17,7 +17,7 @@ public class Weather implements Serializable {
 
     /**
      * Constructor
-     * @param id locality id
+     * @param id - location id
      * @param temperature from locality
      * @param precipitations from locality
      * @param humidity from locality
@@ -32,15 +32,15 @@ public class Weather implements Serializable {
     }
 
     /**
-     * @return - locality id
+     * @return - location id
      */
     public Integer getId() {
         return id;
     }
 
     /**
-     * Sets the locality id
-     * @param id - locality id
+     * Sets location id
+     * @param id - location id
      */
     public void setId(Integer id) {
         this.id = id;
@@ -104,5 +104,19 @@ public class Weather implements Serializable {
      */
     public void setWind(Integer wind) {
         this.wind = wind;
+    }
+
+    /**
+     * @return Weather class
+     */
+    @Override
+    public String toString() {
+        return "Weather{" +
+                "id=" + id +
+                ", temperature=" + temperature +
+                ", precipitations=" + precipitations +
+                ", humidity=" + humidity +
+                ", wind=" + wind +
+                '}';
     }
 }

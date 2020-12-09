@@ -1,5 +1,5 @@
 
-<h1 align="center" > Weather Forecast with Servlet </h1>
+<h1 align="center"> Weather Forecast in Brasov County with Servlet</h1>
 
 <h2>Application description :</h2>
 

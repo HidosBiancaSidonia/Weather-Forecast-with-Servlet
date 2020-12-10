@@ -35,8 +35,7 @@ public class MainPage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         ArrayList<Location> locations = GetLocation.getLocations();
-
-        //System.out.println(locations);
+        locationsInList.clear();
 
         String locationName = request.getParameter("locationName");
         String latitude = request.getParameter("latitude");
@@ -79,7 +78,6 @@ public class MainPage extends HttpServlet {
                             default:
                                 break;
                         }
-
                     }
                     break;
                 case "coordinates":
@@ -135,16 +133,12 @@ public class MainPage extends HttpServlet {
                             default:
                                 break;
                         }
-
                     }
                     break;
                 default:
                     break;
             }
-
         }
-
-
     }
 
     /**

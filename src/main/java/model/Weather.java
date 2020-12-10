@@ -3,7 +3,6 @@ package model;
 import java.io.Serializable;
 
 public class Weather implements Serializable {
-    private Integer id;
     private Integer temperature;
     private Integer precipitations;
     private Integer humidity;
@@ -17,33 +16,16 @@ public class Weather implements Serializable {
 
     /**
      * Constructor
-     * @param id - location id
      * @param temperature from locality
      * @param precipitations from locality
      * @param humidity from locality
      * @param wind from locality
      */
-    public Weather(Integer id, Integer temperature, Integer precipitations, Integer humidity, Integer wind) {
-        this.id = id;
+    public Weather(Integer temperature, Integer precipitations, Integer humidity, Integer wind) {
         this.temperature = temperature;
         this.precipitations = precipitations;
         this.humidity = humidity;
         this.wind = wind;
-    }
-
-    /**
-     * @return - location id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * Sets location id
-     * @param id - location id
-     */
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     /**
@@ -112,7 +94,6 @@ public class Weather implements Serializable {
     @Override
     public String toString() {
         return "Weather{" +
-                "id=" + id +
                 ", temperature=" + temperature +
                 ", precipitations=" + precipitations +
                 ", humidity=" + humidity +

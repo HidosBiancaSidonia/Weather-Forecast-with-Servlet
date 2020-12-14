@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class GetWeatherForecast{
+
     private final Map<Integer, ArrayList<Weather>> weatherForecastList = new HashMap<>();
 
     /**
@@ -50,6 +51,9 @@ public class GetWeatherForecast{
         return random.nextInt(11);
     }
 
+    /**
+     * Sets weather forecast list
+     */
     public void setMap(){
         ArrayList<Location> locations = GetLocation.getLocations();
         ArrayList<Weather> weathers = new ArrayList<>();
@@ -63,6 +67,9 @@ public class GetWeatherForecast{
         }
     }
 
+    /**
+     * @return weather forecast list
+     */
     public Map<Integer, ArrayList<Weather>> getWeatherForecastList() {
         return weatherForecastList;
     }

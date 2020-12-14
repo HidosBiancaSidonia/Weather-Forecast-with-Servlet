@@ -5,9 +5,6 @@ import getValues.GetWeatherForecast;
 import model.Location;
 import model.Weather;
 
-import javax.servlet.AsyncContext;
-import javax.servlet.AsyncEvent;
-import javax.servlet.AsyncListener;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,33 +20,39 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 
-import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 @WebServlet(urlPatterns = "/location",loadOnStartup = 1)
 public class SecondPage extends HttpServlet {
+
     private Location location = new Location();
     private GetWeatherForecast dataGeneration;
-    private final ScheduledExecutorService executer = Executors.newScheduledThreadPool(10);
+    private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(10);
 
+    /**
+     * When the servlet is started this method will be called first
+     */
     @Override
     public void init() {
         System.out.println("Generated weather forecasts:");
         dataGeneration = new GetWeatherForecast();
         dataGeneration.setMap();
         //System.out.println(dataGeneration.getWeatherForecastList());
-
-        beepForAnHour();
+        dataSettingAfterAWhile();
     }
-        public void beepForAnHour() {
-            final Runnable beeper = new Runnable() {
+
+    /**
+     * Resetting data after a certain time or at a certain time
+     */
+    public void dataSettingAfterAWhile() {
+            final Runnable set = new Runnable() {
                 public void run() {
-                    System.out.println("beep");
+                    System.out.println("dataSettingAfterAWhile");
                     dataGeneration.setMap();
                     LocalDateTime data = LocalDateTime.now();
                     DateTimeFormatter df = DateTimeFormatter.ofPattern("HH:mm:ss");
                     LocalTime time  = LocalTime.parse(df.format(data));
-                    System.out.println(time);
+                    //System.out.println(time);
                 }
             };
 
@@ -71,18 +74,16 @@ public class SecondPage extends HttpServlet {
             //dupa un minut
             long seconds = 60;
 
-            final ScheduledFuture<?> handle = executer.scheduleAtFixedRate(beeper, seconds, 60, SECONDS);
-            executer.schedule(new Runnable() {
+            final ScheduledFuture<?> handle = executor.scheduleAtFixedRate(set, seconds, 60, SECONDS);
+            executor.schedule(new Runnable() {
                 public void run() { handle.cancel(true); }
             }, 60 * 60, SECONDS);
         }
 
-
-
-
     /**
-     * @param request an HttpServletRequest object that contains the request the client has made of the servlet
-     * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+     * @param request -  an HttpServletRequest object that contains the request the client has made of the servlet
+     * @param response - an HttpServletResponse object that contains the response the servlet sends to the client
+     * @throws IOException
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -97,6 +98,11 @@ public class SecondPage extends HttpServlet {
         doGet(request,response);
     }
 
+    /**
+     * @param request  - an HttpServletRequest object that contains the request the client has made of the servlet
+     * @param response - an HttpServletResponse object that contains the response the servlet sends to the client
+     * @throws IOException - if an input or output error is detected when the servlet handles the GET request
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 

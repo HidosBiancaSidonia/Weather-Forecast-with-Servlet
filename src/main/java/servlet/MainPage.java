@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 @WebServlet(value = "/chooseServlet",loadOnStartup = 0)
 public class MainPage extends HttpServlet {
+
     private final ArrayList<Location> locationsInList = new ArrayList<>();
     private final DecimalFormat df = new DecimalFormat("#.0000");
 

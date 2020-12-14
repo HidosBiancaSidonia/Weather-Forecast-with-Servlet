@@ -4,13 +4,11 @@ import getValues.GetLocation;
 import model.Location;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
@@ -192,7 +190,8 @@ public class MainPage extends HttpServlet {
                 "\n" +
                 "</style>");
         out.print("<body>");
-        out.println("<form name=\"chooseLocation\" method=\"post\" action=\"chooseLocation\">");
+        out.print("<input type=\"button\" class=\"btn btn-primary\"  onclick=\"location.href='http://localhost:8080/Weather_Forecast_war/'\"  value=\"Back to main page\" />");
+        out.println("<form name=\"location\" method=\"post\" action=\"location\">");
         out.print("<h1 align=\"center\">Weather Forecast in Brasov County</h1>\n" +
                 "<div class=\"myDiv\">");
         out.print("<h2 style=\"color: aliceblue; padding-bottom: 10px\" >Matching locations:</h2>");

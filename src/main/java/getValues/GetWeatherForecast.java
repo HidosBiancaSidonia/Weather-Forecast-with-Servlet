@@ -1,32 +1,21 @@
 package getValues;
 
-import getValues.GetLocation;
 import model.Location;
 import model.Weather;
 
-import javax.servlet.AsyncContext;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-@WebServlet(urlPatterns = "/weatherForecast", asyncSupported = true)
-public class GetWeatherForecast extends HttpServlet {
-    private final Map<Integer, ArrayList<Weather>> weatherForecastList = new HashMap<Integer, ArrayList<Weather>>();
+public class GetWeatherForecast{
+    private final Map<Integer, ArrayList<Weather>> weatherForecastList = new HashMap<>();
 
     /**
      * Constructor
      */
     public GetWeatherForecast(){
 
-    }
-
-    @Override
-    public void doGet(HttpServletRequest request,HttpServletResponse response) {
     }
 
     /**

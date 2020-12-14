@@ -5,6 +5,9 @@ import getValues.GetWeatherForecast;
 import model.Location;
 import model.Weather;
 
+import javax.servlet.AsyncContext;
+import javax.servlet.AsyncEvent;
+import javax.servlet.AsyncListener;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,19 +19,65 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 
-@WebServlet(urlPatterns = "/chooseLocation",loadOnStartup = 1)
+import static java.util.concurrent.TimeUnit.MINUTES;
+import static java.util.concurrent.TimeUnit.SECONDS;
+
+@WebServlet(urlPatterns = "/location",loadOnStartup = 1)
 public class SecondPage extends HttpServlet {
     private Location location = new Location();
     private GetWeatherForecast dataGeneration;
+    private final ScheduledExecutorService executer = Executors.newScheduledThreadPool(10);
 
     @Override
     public void init() {
         System.out.println("Generated weather forecasts:");
         dataGeneration = new GetWeatherForecast();
         dataGeneration.setMap();
-        System.out.println(dataGeneration.getWeatherForecastList());
+        //System.out.println(dataGeneration.getWeatherForecastList());
+
+        beepForAnHour();
     }
+        public void beepForAnHour() {
+            final Runnable beeper = new Runnable() {
+                public void run() {
+                    System.out.println("beep");
+                    dataGeneration.setMap();
+                    LocalDateTime data = LocalDateTime.now();
+                    DateTimeFormatter df = DateTimeFormatter.ofPattern("HH:mm:ss");
+                    LocalTime time  = LocalTime.parse(df.format(data));
+                    System.out.println(time);
+                }
+            };
+
+
+            LocalDateTime data = LocalDateTime.now();
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("HH:mm:ss");
+            LocalTime time  = LocalTime.parse(df.format(data));
+            System.out.println(time);
+
+            //dupa o ora
+            LocalTime value = time.plusHours(1);
+            LocalTime fixed = LocalTime.of(value.getHour(),0,0);
+            LocalTime fixedTime = LocalTime.of(0,fixed.minusMinutes(time.getMinute()).getMinute(),fixed.minusSeconds(time.getSecond()).getSecond());
+            System.out.println("Minutes left until fixed time: " + fixedTime);
+
+            //long seconds = fixedTime.toSecondOfDay();
+
+
+            //dupa un minut
+            long seconds = 60;
+
+            final ScheduledFuture<?> handle = executer.scheduleAtFixedRate(beeper, seconds, 60, SECONDS);
+            executer.schedule(new Runnable() {
+                public void run() { handle.cancel(true); }
+            }, 60 * 60, SECONDS);
+        }
+
+
 
 
     /**
@@ -82,7 +131,8 @@ public class SecondPage extends HttpServlet {
                 "\n" +
                 "</style>");
         out.print("<body>");
-        out.println("<form name=\"weatherForecast\" method=\"post\" action=\"weatherForecast\">");
+        out.print("<input type=\"button\" class=\"btn btn-primary\"  onclick=\"location.href='http://localhost:8080/Weather_Forecast_war/'\"  value=\"Back to main page\" />");
+        out.print("<form name=\"weatherForecast\" method=\"post\" action=\"weatherForecast\">");
         out.print("<h1 align=\"center\">Weather Forecast in "+location.getName()+" Locality </h1>\n" +
                 "<div class=\"myDiv\">");
 
@@ -102,12 +152,12 @@ public class SecondPage extends HttpServlet {
         LocalDateTime data = LocalDateTime.now();
         DateTimeFormatter df = DateTimeFormatter.ofPattern("HH:mm:ss");
         LocalTime time  = LocalTime.parse(df.format(data));
-        LocalTime value = time;
+        LocalTime value;
 
         Map<Integer, ArrayList<Weather>> weatherForecastList= dataGeneration.getWeatherForecastList();
         ArrayList<Weather> weathers = weatherForecastList.get(location.getId());
 
-            for(int i=0;i<25;i++){
+            for(int i=0; i<25; i++){
                 value = time.plusHours(i);
                 out.print("<tr style=\"color:white\"><th scope=\"row\">"+value+"</th>");
                 out.print("<td>"+weathers.get(i).getTemperature()+" &#8451</td>");
@@ -118,7 +168,6 @@ public class SecondPage extends HttpServlet {
             }
 
             out.print("</tbody>");
-
 
         out.print("</form>");
         out.println("</body></html>");

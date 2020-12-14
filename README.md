@@ -37,3 +37,7 @@
 <p align="center">
 <img width="600" align="center" alt="Screenshot_5" src="https://user-images.githubusercontent.com/58684695/101657272-5b61e580-3a4c-11eb-9322-242601e050a7.png">
 </p>
+
+<h2>The page where the weather forecasts are displayed:</h2>
+
+![img](https://user-images.githubusercontent.com/58684695/102120114-bd568c80-3e4a-11eb-9659-9e0c53ac27c4.png)

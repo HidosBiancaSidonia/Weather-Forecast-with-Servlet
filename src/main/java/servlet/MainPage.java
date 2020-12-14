@@ -4,19 +4,20 @@ import getValues.GetLocation;
 import model.Location;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-@WebServlet("/chooseServlet")
+@WebServlet(value = "/chooseServlet",loadOnStartup = 0)
 public class MainPage extends HttpServlet {
-
     private final ArrayList<Location> locationsInList = new ArrayList<>();
     private final DecimalFormat df = new DecimalFormat("#.0000");
 

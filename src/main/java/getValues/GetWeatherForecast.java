@@ -1,4 +1,4 @@
-package servlet;
+package getValues;
 
 import getValues.GetLocation;
 import model.Location;
@@ -15,23 +15,14 @@ import java.util.Map;
 import java.util.Random;
 
 @WebServlet(urlPatterns = "/weatherForecast", asyncSupported = true)
-public class DataGeneration extends HttpServlet {
+public class GetWeatherForecast extends HttpServlet {
     private final Map<Integer, ArrayList<Weather>> weatherForecastList = new HashMap<Integer, ArrayList<Weather>>();
 
     /**
      * Constructor
      */
-    public DataGeneration(){
-        ArrayList<Location> locations = GetLocation.getLocations();
-        ArrayList<Weather> weathers = new ArrayList<>();
-        for (Location location:locations) {
-            weathers.clear();
-            for(int hour=0;hour<=24;hour++){
-                Weather weather = new Weather(generateTemperature(),generatePrecipitations(),generateHumidity(),generateWind());
-                weathers.add(weather);
-            }
-            weatherForecastList.put(location.getId(),weathers);
-        }
+    public GetWeatherForecast(){
+
     }
 
     @Override
@@ -68,6 +59,19 @@ public class DataGeneration extends HttpServlet {
     public Integer generateWind(){
         Random random = new Random();
         return random.nextInt(11);
+    }
+
+    public void setMap(){
+        ArrayList<Location> locations = GetLocation.getLocations();
+        ArrayList<Weather> weathers = new ArrayList<>();
+        for (Location location:locations) {
+            weathers.clear();
+            for(int hour=0;hour<=24;hour++){
+                Weather weather = new Weather(generateTemperature(),generatePrecipitations(),generateHumidity(),generateWind());
+                weathers.add(weather);
+            }
+            weatherForecastList.put(location.getId(),weathers);
+        }
     }
 
     public Map<Integer, ArrayList<Weather>> getWeatherForecastList() {

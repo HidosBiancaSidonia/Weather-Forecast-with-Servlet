@@ -1,7 +1,7 @@
 package servlet;
 
 import getValues.GetLocation;
-import javafx.scene.input.DataFormat;
+import getValues.GetWeatherForecast;
 import model.Location;
 import model.Weather;
 
@@ -17,9 +17,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
 
-@WebServlet(urlPatterns = "/chooseLocation")
-public class ChooseLocationPage extends HttpServlet {
+@WebServlet(urlPatterns = "/chooseLocation",loadOnStartup = 1)
+public class SecondPage extends HttpServlet {
     private Location location = new Location();
+    private GetWeatherForecast dataGeneration;
+
+    @Override
+    public void init() {
+        System.out.println("Generated weather forecasts:");
+        dataGeneration = new GetWeatherForecast();
+        dataGeneration.setMap();
+        System.out.println(dataGeneration.getWeatherForecastList());
+    }
+
 
     /**
      * @param request an HttpServletRequest object that contains the request the client has made of the servlet
@@ -94,7 +104,6 @@ public class ChooseLocationPage extends HttpServlet {
         LocalTime time  = LocalTime.parse(df.format(data));
         LocalTime value = time;
 
-        DataGeneration dataGeneration = new DataGeneration();
         Map<Integer, ArrayList<Weather>> weatherForecastList= dataGeneration.getWeatherForecastList();
         ArrayList<Weather> weathers = weatherForecastList.get(location.getId());
 

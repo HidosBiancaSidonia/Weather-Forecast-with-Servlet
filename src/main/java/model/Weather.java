@@ -94,7 +94,7 @@ public class Weather implements Serializable {
     @Override
     public String toString() {
         return "Weather{" +
-                ", temperature=" + temperature +
+                " temperature=" + temperature +
                 ", precipitations=" + precipitations +
                 ", humidity=" + humidity +
                 ", wind=" + wind +

@@ -12,7 +12,7 @@
 1. **location name** (the server will respond with the location or locations that best match the name entered, from where the user will choose the location they are looking for);
 2. **GPS coordinates** (the server will respond with the nearest location or locations, from where the user will choose the location they are looking for).
 
-- [ ] the weather forecast is updated from hour to hour.
+- [X] the weather forecast is updated from hour to hour.
 
 <h2>The start page design :</h2>
 

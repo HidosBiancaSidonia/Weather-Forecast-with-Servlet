@@ -27,7 +27,7 @@ public class SecondPage extends HttpServlet {
 
     private Location location = new Location();
     private GetWeatherForecast dataGeneration;
-    private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(10);
+    private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(100);
 
     /**
      * When the servlet is started this method will be called first
@@ -45,15 +45,9 @@ public class SecondPage extends HttpServlet {
      * Resetting data after a certain time or at a certain time
      */
     public void dataSettingAfterAWhile() {
-            final Runnable set = new Runnable() {
-                public void run() {
-                    System.out.println("dataSettingAfterAWhile");
-                    dataGeneration.setMap();
-                    LocalDateTime data = LocalDateTime.now();
-                    DateTimeFormatter df = DateTimeFormatter.ofPattern("HH:mm:ss");
-                    LocalTime time  = LocalTime.parse(df.format(data));
-                    //System.out.println(time);
-                }
+            final Runnable set = () -> {
+                System.out.println("dataSettingAfterAWhile");
+                dataGeneration.setMap();
             };
 
 
@@ -75,15 +69,13 @@ public class SecondPage extends HttpServlet {
             long seconds = 60;
 
             final ScheduledFuture<?> handle = executor.scheduleAtFixedRate(set, seconds, 60, SECONDS);
-            executor.schedule(new Runnable() {
-                public void run() { handle.cancel(true); }
-            }, 60 * 60, SECONDS);
+            executor.schedule(() -> { handle.cancel(true); }, 60 * 60, SECONDS);
         }
 
     /**
      * @param request -  an HttpServletRequest object that contains the request the client has made of the servlet
      * @param response - an HttpServletResponse object that contains the response the servlet sends to the client
-     * @throws IOException
+     * @throws IOException - if an input or output error is detected when the servlet handles the GET request
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -111,6 +103,9 @@ public class SecondPage extends HttpServlet {
         out.print("<html><head>");
         out.print("<link rel=\"icon\" href=\"images/icon.png\" type=\"image/icon type\">");
         out.print("<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css\" integrity=\"sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2\" crossorigin=\"anonymous\">");
+
+        out.print("<script src=\"asyncUpdate.js\"></script>");
+
         out.print("<title>Weather Forecast</title></head>");
         out.print("<style>\n" +
                 "    body {\n" +
@@ -137,10 +132,14 @@ public class SecondPage extends HttpServlet {
                 "\n" +
                 "</style>");
         out.print("<body>");
-        out.print("<input type=\"button\" class=\"btn btn-primary\"  onclick=\"location.href='http://localhost:8080/Weather_Forecast_war/'\"  value=\"Back to main page\" />");
+        out.print("<h5 align=\"center\">The weather forecast is updated every hour, on the hour!</h5>");
+        out.println("<input type=\"button\" class=\"btn btn-primary\"  onclick=\"location.href='http://localhost:8080/Weather_Forecast_war/'\"  value=\"Back to main page\" />");
+        out.println("<input type=\"button\" class=\"btn btn-primary\"  onclick=\"location.href='http://localhost:8080/Weather_Forecast_war/location'\"  value=\"Update data\" />");
+       // out.print("<br/><input type=\"button\" style=\"color: transparent; background-color: transparent; border-color: transparent; cursor: default;\" class=\"btn btn-primary\" id=\"ajaxBt"+location.getId()+"\"  value=\"Update data\" />");
+
         out.print("<form name=\"weatherForecast\" method=\"post\" action=\"weatherForecast\">");
         out.print("<h1 align=\"center\">Weather Forecast in "+location.getName()+" Locality </h1>\n" +
-                "<div class=\"myDiv\">");
+                "<div class=\"myDiv\"  id=\"reqResponse\">");
 
         out.print(
                 "<table class=\"table\">\n" +
@@ -174,7 +173,7 @@ public class SecondPage extends HttpServlet {
             }
 
             out.print("</tbody>");
-
+        out.print("</div>");
         out.print("</form>");
         out.println("</body></html>");
     }

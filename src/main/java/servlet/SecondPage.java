@@ -132,14 +132,15 @@ public class SecondPage extends HttpServlet {
                 "\n" +
                 "</style>");
         out.print("<body>");
-        out.print("<h5 align=\"center\">The weather forecast is updated every hour, on the hour!</h5>");
+        out.print("<h5 align=\"center\">The weather forecast is updated every minute!</h5>");
         out.println("<input type=\"button\" class=\"btn btn-primary\"  onclick=\"location.href='http://localhost:8080/Weather_Forecast_war/'\"  value=\"Back to main page\" />");
         out.println("<input type=\"button\" class=\"btn btn-primary\"  onclick=\"location.href='http://localhost:8080/Weather_Forecast_war/location'\"  value=\"Update data\" />");
-       // out.print("<br/><input type=\"button\" style=\"color: transparent; background-color: transparent; border-color: transparent; cursor: default;\" class=\"btn btn-primary\" id=\"ajaxBt"+location.getId()+"\"  value=\"Update data\" />");
+        //out.print("<br/><input type=\"button\" style=\"color: transparent; background-color: transparent; border-color: transparent; cursor: default;\" class=\"btn btn-primary\" id=\"ajaxBt"+location.getId()+"\"  value=\"Update data\" />");
 
         out.print("<form name=\"weatherForecast\" method=\"post\" action=\"weatherForecast\">");
-        out.print("<h1 align=\"center\">Weather Forecast in "+location.getName()+" Locality </h1>\n" +
-                "<div class=\"myDiv\"  id=\"reqResponse\">");
+        out.print("<h1 align=\"center\">Weather Forecast in "+location.getName()+" Locality </h1>");
+        out.print("<h3 align=\"center\">Latitude: "+location.getLatitude()+"   Longitude: "+location.getLongitude()+"</h3>");
+        out.print("<div class=\"myDiv\"  id=\"reqResponse\">");
 
         out.print(
                 "<table class=\"table\">\n" +

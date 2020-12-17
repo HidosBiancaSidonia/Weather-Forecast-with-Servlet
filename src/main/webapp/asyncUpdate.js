@@ -23,7 +23,7 @@ function setupEventHandlers() {
 
         ajaxBtn.click();
         counter++
-    },60000);  // this will make it click again every 60000 miliseconds
+    },10000);  // this will make it click again every 60000 miliseconds
 }
 
 //Event handlers for the buttons

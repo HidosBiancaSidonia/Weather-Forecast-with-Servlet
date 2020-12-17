@@ -51,7 +51,7 @@ public class UpdateAsyncService implements Runnable  {
             //long seconds = fixedTime.toSecondOfDay();
 
             //dupa un minut
-            long seconds = 60;
+            long seconds = 10;
 
             //Sleeping the thread so as to mimic long running task.
             Thread.sleep(TimeUnit.SECONDS.toMillis(seconds));
